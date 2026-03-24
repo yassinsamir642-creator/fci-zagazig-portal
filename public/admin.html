@@ -1,0 +1,573 @@
+<!-- public/admin.html -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - FCI Zagazig University</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- LOGIN PAGE -->
+  <div id="login-page" class="admin-login-page">
+    <div class="login-card">
+      <div class="logo-section">
+        <svg viewBox="0 0 200 200" class="university-logo" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="95" fill="none" stroke="var(--primary)" stroke-width="3"/>
+          <circle cx="100" cy="100" r="88" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <path d="M100 25 L155 55 L155 110 Q155 155 100 180 Q45 155 45 110 L45 55 Z" fill="var(--primary)" opacity="0.1" stroke="var(--primary)" stroke-width="2"/>
+          <rect x="70" y="65" width="25" height="35" rx="2" fill="var(--primary)" opacity="0.8"/>
+          <rect x="105" y="65" width="25" height="35" rx="2" fill="var(--accent)" opacity="0.8"/>
+          <rect x="80" y="108" width="40" height="28" rx="3" fill="none" stroke="var(--primary)" stroke-width="2"/>
+          <text x="100" y="126" text-anchor="middle" fill="var(--accent)" font-size="10" font-weight="bold">&lt;/&gt;</text>
+          <text x="100" y="165" text-anchor="middle" fill="var(--primary)" font-size="16" font-weight="bold">FCI</text>
+          <polygon points="100,30 115,38 100,46 85,38" fill="var(--primary)"/>
+        </svg>
+        <h2 class="site-title" data-i18n="admin_login">Admin Login</h2>
+        <p class="site-title-ar">لوحة التحكم</p>
+      </div>
+      
+      <div class="login-error" id="login-error" data-i18n="login_error">Invalid credentials</div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label data-i18n="username">Username</label>
+          <input type="text" class="form-control" id="login-username" required placeholder="admin">
+        </div>
+        <div class="form-group">
+          <label data-i18n="password">Password</label>
+          <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px;">
+          <span data-i18n="login">Login</span> →
+        </button>
+      </form>
+      
+      <div style="margin-top: 20px; display:flex; gap:8px; justify-content:center;">
+        <button id="admin-theme-toggle" class="btn-icon" style="background:var(--bg-hover); color:var(--text-primary);">🌙</button>
+        <button id="admin-lang-toggle" class="btn-lang" style="background:var(--bg-hover); color:var(--text-primary); border-color:var(--border);">
+          <span id="admin-lang-text">العربية</span>
+        </button>
+      </div>
+      
+      <p style="text-align:center; margin-top:16px;">
+        <a href="/" style="color:var(--primary); font-size:0.9rem;">← Back to website</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="admin-dashboard" class="admin-layout" style="display:none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-header">
+        <svg viewBox="0 0 200 200" class="university-logo" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="95" fill="none" stroke="white" stroke-width="3"/>
+          <text x="100" y="110" text-anchor="middle" fill="white" font-size="28" font-weight="bold">FCI</text>
+        </svg>
+        <h3 data-i18n="admin_panel">Admin Panel</h3>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="sidebar-link active" data-admin-section="admin-home" onclick="showAdminSection('admin-home', this)">
+          <span class="icon">📊</span>
+          <span data-i18n="dashboard">Dashboard</span>
+        </button>
+        <button class="sidebar-link" data-admin-section="admin-files" onclick="showAdminSection('admin-files', this)">
+          <span class="icon">📁</span>
+          <span data-i18n="manage_files">Manage Files</span>
+        </button>
+        <button class="sidebar-link" data-admin-section="admin-videos" onclick="showAdminSection('admin-videos', this)">
+          <span class="icon">🎬</span>
+          <span data-i18n="manage_videos">Manage Videos</span>
+        </button>
+        <button class="sidebar-link" data-admin-section="admin-exams" onclick="showAdminSection('admin-exams', this)">
+          <span class="icon">📅</span>
+          <span data-i18n="manage_exams">Manage Exams</span>
+        </button>
+        <button class="sidebar-link" data-admin-section="admin-courses" onclick="showAdminSection('admin-courses', this)">
+          <span class="icon">📚</span>
+          <span data-i18n="manage_courses">Manage Courses</span>
+        </button>
+        <button class="sidebar-link" data-admin-section="admin-announcements" onclick="showAdminSection('admin-announcements', this)">
+          <span class="icon">📢</span>
+          <span data-i18n="manage_announcements">Announcements</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <button id="dash-theme-toggle" class="btn-icon" onclick="toggleAdminTheme()">🌙</button>
+          <button class="btn-lang" onclick="toggleAdminLang()" style="flex:1;">
+            <span id="dash-lang-text">العربية</span>
+          </button>
+        </div>
+        <button class="sidebar-link" onclick="adminLogout()" style="padding:12px 0;">
+          <span class="icon">🚪</span>
+          <span data-i18n="logout">Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+      <!-- Mobile sidebar toggle -->
+      <button class="btn-icon" id="sidebar-toggle" onclick="toggleSidebar()" 
+              style="background:var(--primary); color:white; margin-bottom:16px; display:none;">☰</button>
+      
+      <!-- Dashboard Home -->
+      <div id="admin-home" class="admin-section active">
+        <div class="admin-topbar">
+          <h2 data-i18n="dashboard">📊 Dashboard</h2>
+          <span id="admin-welcome"></span>
+        </div>
+        
+        <div class="stats-grid" id="admin-stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-value" id="admin-stat-files">0</div>
+            <div class="stat-label" data-i18n="stat_files">Files</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎬</div>
+            <div class="stat-value" id="admin-stat-videos">0</div>
+            <div class="stat-label" data-i18n="stat_videos">Videos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-value" id="admin-stat-exams">0</div>
+            <div class="stat-label" data-i18n="stat_exams">Exams</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-value" id="admin-stat-courses">0</div>
+            <div class="stat-label" data-i18n="stat_courses">Courses</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⬇️</div>
+            <div class="stat-value" id="admin-stat-downloads">0</div>
+            <div class="stat-label" data-i18n="total_downloads">Downloads</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👁️</div>
+            <div class="stat-value" id="admin-stat-views">0</div>
+            <div class="stat-label" data-i18n="total_views">Views</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Files Management -->
+      <div id="admin-files" class="admin-section">
+        <div class="admin-topbar">
+          <h2>📁 <span data-i18n="manage_files">Manage Files</span></h2>
+          <button class="btn btn-primary" onclick="showFileForm()">+ <span data-i18n="add_new">Add New</span></button>
+        </div>
+        
+        <!-- Upload Form -->
+        <div id="file-form-card" class="admin-card" style="display:none;">
+          <form id="file-upload-form" enctype="multipart/form-data">
+            <input type="hidden" id="file-edit-id">
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="title_en">Title (English)</label>
+                <input type="text" class="form-control" id="file-title-en" required>
+              </div>
+              <div class="form-group">
+                <label data-i18n="title_ar">Title (Arabic)</label>
+                <input type="text" class="form-control" id="file-title-ar" dir="rtl">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="desc_en">Description (English)</label>
+                <textarea class="form-control" id="file-desc-en" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label data-i18n="desc_ar">Description (Arabic)</label>
+                <textarea class="form-control" id="file-desc-ar" rows="2" dir="rtl"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="select_course">Course</label>
+                <select class="form-control" id="file-course"></select>
+              </div>
+              <div class="form-group">
+                <label data-i18n="file_type">File Type</label>
+                <select class="form-control" id="file-type">
+                  <option value="lecture" data-i18n="lecture">Lecture</option>
+                  <option value="section" data-i18n="section">Section</option>
+                  <option value="assignment" data-i18n="assignment">Assignment</option>
+                  <option value="reference" data-i18n="reference">Reference</option>
+                  <option value="other" data-i18n="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" id="file-input-group">
+              <label data-i18n="choose_file">Choose File</label>
+              <input type="file" class="form-control" id="file-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt,.png,.jpg,.jpeg,.gif">
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary" data-i18n="save">Save</button>
+              <button type="button" class="btn btn-outline" onclick="hideFileForm()" data-i18n="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th data-i18n="title_en">Title</th>
+                  <th data-i18n="select_course">Course</th>
+                  <th data-i18n="file_type">Type</th>
+                  <th>Size</th>
+                  <th>⬇️</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="admin-files-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Videos Management -->
+      <div id="admin-videos" class="admin-section">
+        <div class="admin-topbar">
+          <h2>🎬 <span data-i18n="manage_videos">Manage Videos</span></h2>
+          <button class="btn btn-primary" onclick="showVideoForm()">+ <span data-i18n="add_new">Add New</span></button>
+        </div>
+        
+        <div id="video-form-card" class="admin-card" style="display:none;">
+          <form id="video-upload-form" enctype="multipart/form-data">
+            <input type="hidden" id="video-edit-id">
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="title_en">Title (English)</label>
+                <input type="text" class="form-control" id="video-title-en" required>
+              </div>
+              <div class="form-group">
+                <label data-i18n="title_ar">Title (Arabic)</label>
+                <input type="text" class="form-control" id="video-title-ar" dir="rtl">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="desc_en">Description (English)</label>
+                <textarea class="form-control" id="video-desc-en" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label data-i18n="desc_ar">Description (Arabic)</label>
+                <textarea class="form-control" id="video-desc-ar" rows="2" dir="rtl"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="video_type">Video Type</label>
+                <select class="form-control" id="video-type-select" onchange="toggleVideoInput()">
+                  <option value="youtube">YouTube Link</option>
+                  <option value="uploaded">Upload Video</option>
+                  <option value="external">External Link</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label data-i18n="select_course">Course</label>
+                <select class="form-control" id="video-course"></select>
+              </div>
+            </div>
+            <div class="form-group" id="video-url-group">
+              <label data-i18n="video_url">Video URL</label>
+              <input type="url" class="form-control" id="video-url" placeholder="https://youtube.com/watch?v=...">
+            </div>
+            <div class="form-group" id="video-file-group" style="display:none;">
+              <label data-i18n="choose_file">Choose Video File</label>
+              <input type="file" class="form-control" id="video-file-input" accept="video/*">
+            </div>
+            <div class="form-group">
+              <label data-i18n="duration">Duration</label>
+              <input type="text" class="form-control" id="video-duration" placeholder="e.g. 45:00">
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary" data-i18n="save">Save</button>
+              <button type="button" class="btn btn-outline" onclick="hideVideoForm()" data-i18n="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th data-i18n="title_en">Title</th>
+                  <th data-i18n="select_course">Course</th>
+                  <th>Type</th>
+                  <th>👁️</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="admin-videos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exams Management -->
+      <div id="admin-exams" class="admin-section">
+        <div class="admin-topbar">
+          <h2>📅 <span data-i18n="manage_exams">Manage Exams</span></h2>
+          <button class="btn btn-primary" onclick="showExamForm()">+ <span data-i18n="add_new">Add New</span></button>
+        </div>
+        
+        <div id="exam-form-card" class="admin-card" style="display:none;">
+          <form id="exam-form">
+            <input type="hidden" id="exam-edit-id">
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="select_course">Course</label>
+                <select class="form-control" id="exam-course" required></select>
+              </div>
+              <div class="form-group">
+                <label data-i18n="exam_type">Exam Type</label>
+                <select class="form-control" id="exam-type-input">
+                  <option value="midterm">Midterm</option>
+                  <option value="final">Final</option>
+                  <option value="quiz">Quiz</option>
+                  <option value="practical">Practical</option>
+                  <option value="oral">Oral</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="exam_date">Exam Date</label>
+                <input type="date" class="form-control" id="exam-date" required>
+              </div>
+              <div class="form-group" style="display:flex; gap:10px;">
+                <div style="flex:1;">
+                  <label data-i18n="start_time">Start Time</label>
+                  <input type="time" class="form-control" id="exam-start" required>
+                </div>
+                <div style="flex:1;">
+                  <label data-i18n="end_time">End Time</label>
+                  <input type="time" class="form-control" id="exam-end" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="location_en">Location (English)</label>
+                <input type="text" class="form-control" id="exam-location-en">
+              </div>
+              <div class="form-group">
+                <label data-i18n="location_ar">Location (Arabic)</label>
+                <input type="text" class="form-control" id="exam-location-ar" dir="rtl">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="hall_number">Hall Number</label>
+                <input type="text" class="form-control" id="exam-hall">
+              </div>
+              <div class="form-group"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="notes_en">Notes (English)</label>
+                <textarea class="form-control" id="exam-notes-en" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label data-i18n="notes_ar">Notes (Arabic)</label>
+                <textarea class="form-control" id="exam-notes-ar" rows="2" dir="rtl"></textarea>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary" data-i18n="save">Save</button>
+              <button type="button" class="btn btn-outline" onclick="hideExamForm()" data-i18n="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th data-i18n="th_course">Course</th>
+                  <th data-i18n="th_type">Type</th>
+                  <th data-i18n="th_date">Date</th>
+                  <th data-i18n="th_time">Time</th>
+                  <th data-i18n="th_location">Location</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="admin-exams-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Courses Management -->
+      <div id="admin-courses" class="admin-section">
+        <div class="admin-topbar">
+          <h2>📚 <span data-i18n="manage_courses">Manage Courses</span></h2>
+          <button class="btn btn-primary" onclick="showCourseForm()">+ <span data-i18n="add_new">Add New</span></button>
+        </div>
+        
+        <div id="course-form-card" class="admin-card" style="display:none;">
+          <form id="course-form">
+            <input type="hidden" id="course-edit-id">
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="course_code">Course Code</label>
+                <input type="text" class="form-control" id="course-code" required placeholder="CS102">
+              </div>
+              <div class="form-group">
+                <label data-i18n="credit_hours">Credit Hours</label>
+                <input type="number" class="form-control" id="course-credits" value="3" min="1" max="6">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="course_name_en">Course Name (English)</label>
+                <input type="text" class="form-control" id="course-name-en" required>
+              </div>
+              <div class="form-group">
+                <label data-i18n="course_name_ar">Course Name (Arabic)</label>
+                <input type="text" class="form-control" id="course-name-ar" dir="rtl" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="desc_en">Description (English)</label>
+                <textarea class="form-control" id="course-desc-en" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label data-i18n="desc_ar">Description (Arabic)</label>
+                <textarea class="form-control" id="course-desc-ar" rows="2" dir="rtl"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Instructor (English)</label>
+                <input type="text" class="form-control" id="course-instructor-en">
+              </div>
+              <div class="form-group">
+                <label>المحاضر (عربي)</label>
+                <input type="text" class="form-control" id="course-instructor-ar" dir="rtl">
+              </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary" data-i18n="save">Save</button>
+              <button type="button" class="btn btn-outline" onclick="hideCourseForm()" data-i18n="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th data-i18n="course_name_en">Name</th>
+                  <th data-i18n="instructor">Instructor</th>
+                  <th data-i18n="credit_hours">Hours</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="admin-courses-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Announcements Management -->
+      <div id="admin-announcements" class="admin-section">
+        <div class="admin-topbar">
+          <h2>📢 <span data-i18n="manage_announcements">Announcements</span></h2>
+          <button class="btn btn-primary" onclick="showAnnouncementForm()">+ <span data-i18n="add_new">Add New</span></button>
+        </div>
+        
+        <div id="announcement-form-card" class="admin-card" style="display:none;">
+          <form id="announcement-form">
+            <input type="hidden" id="announcement-edit-id">
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="title_en">Title (English)</label>
+                <input type="text" class="form-control" id="announcement-title-en" required>
+              </div>
+              <div class="form-group">
+                <label data-i18n="title_ar">Title (Arabic)</label>
+                <input type="text" class="form-control" id="announcement-title-ar" dir="rtl" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="desc_en">Content (English)</label>
+                <textarea class="form-control" id="announcement-content-en" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label data-i18n="desc_ar">Content (Arabic)</label>
+                <textarea class="form-control" id="announcement-content-ar" rows="3" dir="rtl"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="priority">Priority</label>
+                <select class="form-control" id="announcement-priority">
+                  <option value="low">Low</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label data-i18n="select_course">Course (optional)</label>
+                <select class="form-control" id="announcement-course"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" id="announcement-pinned"> 
+                <span data-i18n="pin_announcement">Pin Announcement</span>
+              </label>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary" data-i18n="save">Save</button>
+              <button type="button" class="btn btn-outline" onclick="hideAnnouncementForm()" data-i18n="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th data-i18n="title_en">Title</th>
+                  <th data-i18n="priority">Priority</th>
+                  <th>📌</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="admin-announcements-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

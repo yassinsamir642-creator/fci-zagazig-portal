@@ -1,0 +1,375 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCI - Zagazig University | كلية الحاسبات والمعلومات - جامعة الزقازيق</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Loader -->
+  <div id="page-loader" class="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo">
+        <svg viewBox="0 0 120 120" class="logo-svg spinning">
+          <circle cx="60" cy="60" r="55" fill="none" stroke="var(--primary)" stroke-width="3" stroke-dasharray="10 5"/>
+          <text x="60" y="50" text-anchor="middle" fill="var(--primary)" font-size="14" font-weight="bold">FCI</text>
+          <text x="60" y="70" text-anchor="middle" fill="var(--accent)" font-size="8">ZU</text>
+        </svg>
+      </div>
+      <p class="loader-text" data-i18n="loading">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-top">
+      <div class="container">
+        <div class="header-top-content">
+          <div class="contact-info">
+            <span>📧 info@fci.zu.edu.eg</span>
+            <span>📞 +20 55 230 0000</span>
+          </div>
+          <div class="header-actions">
+            <button id="theme-toggle" class="btn-icon" title="Toggle Dark Mode" aria-label="Toggle theme">
+              <span class="theme-icon">🌙</span>
+            </button>
+            <button id="lang-toggle" class="btn-lang" title="Switch Language">
+              <span id="lang-text">العربية</span>
+            </button>
+            <a href="/admin" class="btn-admin" data-i18n="admin_panel">Admin Panel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-main">
+      <div class="container">
+        <div class="header-main-content">
+          <!-- University Logo SVG -->
+          <div class="logo-section">
+            <svg viewBox="0 0 200 200" class="university-logo" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer ring -->
+              <circle cx="100" cy="100" r="95" fill="none" stroke="var(--primary)" stroke-width="3"/>
+              <circle cx="100" cy="100" r="88" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4 3"/>
+              
+              <!-- Shield background -->
+              <path d="M100 25 L155 55 L155 110 Q155 155 100 180 Q45 155 45 110 L45 55 Z" 
+                    fill="var(--primary)" opacity="0.1" stroke="var(--primary)" stroke-width="2"/>
+              
+              <!-- Book icon -->
+              <rect x="70" y="65" width="25" height="35" rx="2" fill="var(--primary)" opacity="0.8"/>
+              <rect x="105" y="65" width="25" height="35" rx="2" fill="var(--accent)" opacity="0.8"/>
+              <line x1="95" y1="62" x2="95" y2="103" stroke="var(--primary-dark)" stroke-width="2"/>
+              <path d="M70 67 Q82 75 95 67" fill="none" stroke="white" stroke-width="1"/>
+              <path d="M95 67 Q108 75 130 67" fill="none" stroke="white" stroke-width="1"/>
+              
+              <!-- Binary code decorations -->
+              <text x="62" y="58" fill="var(--primary)" font-size="6" opacity="0.6">01101</text>
+              <text x="115" y="58" fill="var(--accent)" font-size="6" opacity="0.6">10110</text>
+              
+              <!-- Circuit lines -->
+              <line x1="55" y1="115" x2="75" y2="115" stroke="var(--primary)" stroke-width="1.5" opacity="0.5"/>
+              <circle cx="75" cy="115" r="2" fill="var(--primary)" opacity="0.5"/>
+              <line x1="125" y1="115" x2="145" y2="115" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"/>
+              <circle cx="125" cy="115" r="2" fill="var(--accent)" opacity="0.5"/>
+              
+              <!-- Monitor/Screen icon -->
+              <rect x="80" y="108" width="40" height="28" rx="3" fill="none" stroke="var(--primary)" stroke-width="2"/>
+              <line x1="100" y1="136" x2="100" y2="145" stroke="var(--primary)" stroke-width="2"/>
+              <line x1="88" y1="145" x2="112" y2="145" stroke="var(--primary)" stroke-width="2"/>
+              <text x="100" y="126" text-anchor="middle" fill="var(--accent)" font-size="10" font-weight="bold">&lt;/&gt;</text>
+              
+              <!-- FCI Text -->
+              <text x="100" y="165" text-anchor="middle" fill="var(--primary)" font-size="16" font-weight="bold" font-family="Inter, sans-serif">FCI</text>
+              
+              <!-- Zagazig University text on arc -->
+              <path id="topArc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none"/>
+              <text font-size="9" fill="var(--primary)" font-weight="600">
+                <textPath href="#topArc" startOffset="50%" text-anchor="middle">ZAGAZIG UNIVERSITY</textPath>
+              </text>
+              
+              <path id="bottomArc" d="M 35 115 A 70 70 0 0 0 165 115" fill="none"/>
+              <text font-size="9" fill="var(--primary)" font-weight="600">
+                <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">جامعة الزقازيق</textPath>
+              </text>
+              
+              <!-- Graduation cap -->
+              <polygon points="100,30 115,38 100,46 85,38" fill="var(--primary)"/>
+              <line x1="100" y1="38" x2="100" y2="48" stroke="var(--primary)" stroke-width="1.5"/>
+              <line x1="115" y1="38" x2="118" y2="48" stroke="var(--primary)" stroke-width="1"/>
+              <circle cx="118" cy="50" r="2" fill="var(--accent)"/>
+            </svg>
+            
+            <div class="logo-text">
+              <h1 id="site-title-en" class="site-title">Faculty of Computers & Information</h1>
+              <h1 id="site-title-ar" class="site-title-ar">كلية الحاسبات والمعلومات</h1>
+              <p class="site-subtitle" data-i18n="subtitle">Zagazig University | First Year - Second Semester 2025/2026</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+      <div class="container">
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home" class="nav-link active" data-section="home" data-i18n="nav_home">Home</a></li>
+          <li><a href="#courses" class="nav-link" data-section="courses" data-i18n="nav_courses">Courses</a></li>
+          <li><a href="#files" class="nav-link" data-section="files" data-i18n="nav_files">Files & Materials</a></li>
+          <li><a href="#videos" class="nav-link" data-section="videos" data-i18n="nav_videos">Videos</a></li>
+          <li><a href="#exams" class="nav-link" data-section="exams" data-i18n="nav_exams">Exam Schedule</a></li>
+          <li><a href="#announcements" class="nav-link" data-section="announcements" data-i18n="nav_announcements">Announcements</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- HOME SECTION -->
+    <section id="home" class="section active">
+      <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+          <div class="hero-content">
+            <h2 class="hero-title" data-i18n="hero_title">Welcome, First Year Students! 🎓</h2>
+            <p class="hero-desc" data-i18n="hero_desc">Your complete academic portal for the Second Semester 2025/2026. Access all your course materials, exam schedules, and important announcements in one place.</p>
+            <div class="hero-buttons">
+              <a href="#exams" class="btn btn-primary btn-lg" data-section="exams" data-i18n="view_exams">📅 View Exam Schedule</a>
+              <a href="#files" class="btn btn-secondary btn-lg" data-section="files" data-i18n="browse_materials">📁 Browse Materials</a>
+            </div>
+          </div>
+          <div class="hero-illustration">
+            <svg viewBox="0 0 300 250" class="hero-svg">
+              <rect x="50" y="30" width="200" height="140" rx="10" fill="var(--primary)" opacity="0.1" stroke="var(--primary)" stroke-width="2"/>
+              <rect x="60" y="40" width="180" height="110" rx="5" fill="var(--bg-card)"/>
+              <rect x="130" y="170" width="40" height="20" fill="var(--primary)" opacity="0.3"/>
+              <rect x="100" y="190" width="100" height="8" rx="4" fill="var(--primary)" opacity="0.2"/>
+              <!-- Code lines -->
+              <rect x="75" y="55" width="80" height="6" rx="3" fill="var(--primary)" opacity="0.4"/>
+              <rect x="75" y="68" width="120" height="6" rx="3" fill="var(--accent)" opacity="0.3"/>
+              <rect x="75" y="81" width="60" height="6" rx="3" fill="var(--primary)" opacity="0.2"/>
+              <rect x="75" y="94" width="100" height="6" rx="3" fill="var(--accent)" opacity="0.4"/>
+              <rect x="75" y="107" width="90" height="6" rx="3" fill="var(--primary)" opacity="0.3"/>
+              <rect x="75" y="120" width="70" height="6" rx="3" fill="var(--accent)" opacity="0.2"/>
+              <!-- Graduation cap floating -->
+              <g transform="translate(230, 20)" class="float-animation">
+                <polygon points="20,5 35,12 20,19 5,12" fill="var(--accent)"/>
+                <line x1="20" y1="12" x2="20" y2="22" stroke="var(--accent)" stroke-width="1.5"/>
+              </g>
+              <!-- Book floating -->
+              <g transform="translate(10, 60)" class="float-animation-delay">
+                <rect x="0" y="0" width="20" height="25" rx="2" fill="var(--primary)" opacity="0.6"/>
+                <line x1="10" y1="0" x2="10" y2="25" stroke="white" stroke-width="1"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-value" id="stat-courses">0</div>
+            <div class="stat-label" data-i18n="stat_courses">Courses</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-value" id="stat-files">0</div>
+            <div class="stat-label" data-i18n="stat_files">Files</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎬</div>
+            <div class="stat-value" id="stat-videos">0</div>
+            <div class="stat-label" data-i18n="stat_videos">Videos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-value" id="stat-exams">0</div>
+            <div class="stat-label" data-i18n="stat_exams">Exams</div>
+          </div>
+        </div>
+
+        <!-- Latest Announcements -->
+        <div class="section-header">
+          <h3 data-i18n="latest_announcements">📢 Latest Announcements</h3>
+        </div>
+        <div id="home-announcements" class="announcements-list"></div>
+      </div>
+    </section>
+
+    <!-- COURSES SECTION -->
+    <section id="courses" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 data-i18n="courses_title">📚 Second Semester Courses 2025/2026</h2>
+          <p data-i18n="courses_desc">All courses for first-year students this semester</p>
+        </div>
+        <div id="courses-grid" class="courses-grid"></div>
+      </div>
+    </section>
+
+    <!-- FILES SECTION -->
+    <section id="files" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 data-i18n="files_title">📁 Files & Course Materials</h2>
+          <p data-i18n="files_desc">Download lectures, assignments, and reference materials</p>
+        </div>
+        <div class="filters-bar">
+          <select id="file-course-filter" class="filter-select">
+            <option value="" data-i18n="all_courses">All Courses</option>
+          </select>
+          <select id="file-type-filter" class="filter-select">
+            <option value="" data-i18n="all_types">All Types</option>
+            <option value="lecture" data-i18n="lecture">Lecture</option>
+            <option value="section" data-i18n="section">Section</option>
+            <option value="assignment" data-i18n="assignment">Assignment</option>
+            <option value="reference" data-i18n="reference">Reference</option>
+            <option value="other" data-i18n="other">Other</option>
+          </select>
+        </div>
+        <div id="files-grid" class="files-grid"></div>
+        <div id="files-empty" class="empty-state" style="display:none;">
+          <span class="empty-icon">📭</span>
+          <p data-i18n="no_files">No files available yet</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEOS SECTION -->
+    <section id="videos" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 data-i18n="videos_title">🎬 Educational Videos</h2>
+          <p data-i18n="videos_desc">Watch course lectures and tutorials</p>
+        </div>
+        <div class="filters-bar">
+          <select id="video-course-filter" class="filter-select">
+            <option value="" data-i18n="all_courses">All Courses</option>
+          </select>
+        </div>
+        <div id="videos-grid" class="videos-grid"></div>
+        <div id="videos-empty" class="empty-state" style="display:none;">
+          <span class="empty-icon">🎬</span>
+          <p data-i18n="no_videos">No videos available yet</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXAMS SECTION -->
+    <section id="exams" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 data-i18n="exams_title">📅 Exam Schedule</h2>
+          <p data-i18n="exams_desc">Midterm and final exam schedules for the second semester</p>
+        </div>
+        <div class="filters-bar">
+          <select id="exam-type-filter" class="filter-select">
+            <option value="" data-i18n="all_exams">All Exams</option>
+            <option value="midterm" data-i18n="midterm">Midterm</option>
+            <option value="final" data-i18n="final_exam">Final</option>
+            <option value="quiz" data-i18n="quiz">Quiz</option>
+            <option value="practical" data-i18n="practical">Practical</option>
+            <option value="oral" data-i18n="oral">Oral</option>
+          </select>
+          <select id="exam-course-filter" class="filter-select">
+            <option value="" data-i18n="all_courses">All Courses</option>
+          </select>
+        </div>
+        <div class="table-responsive">
+          <table class="exam-table" id="exam-table">
+            <thead>
+              <tr>
+                <th data-i18n="th_course">Course</th>
+                <th data-i18n="th_type">Type</th>
+                <th data-i18n="th_date">Date</th>
+                <th data-i18n="th_time">Time</th>
+                <th data-i18n="th_location">Location</th>
+                <th data-i18n="th_notes">Notes</th>
+              </tr>
+            </thead>
+            <tbody id="exam-tbody"></tbody>
+          </table>
+        </div>
+        <div id="exams-empty" class="empty-state" style="display:none;">
+          <span class="empty-icon">📝</span>
+          <p data-i18n="no_exams">No exam schedules available yet</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS SECTION -->
+    <section id="announcements" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 data-i18n="announcements_title">📢 Announcements</h2>
+          <p data-i18n="announcements_desc">Important news and updates</p>
+        </div>
+        <div id="announcements-list" class="announcements-full-list"></div>
+        <div id="announcements-empty" class="empty-state" style="display:none;">
+          <span class="empty-icon">📢</span>
+          <p data-i18n="no_announcements">No announcements yet</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Video Modal -->
+  <div id="video-modal" class="modal">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h3 id="video-modal-title"></h3>
+        <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="video-player-container" class="video-container"></div>
+        <p id="video-modal-desc" class="video-description"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4 data-i18n="footer_about">About</h4>
+          <p data-i18n="footer_about_text">Faculty of Computers and Information, Zagazig University. Preparing the next generation of technology leaders.</p>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer_links">Quick Links</h4>
+          <ul>
+            <li><a href="https://zu.edu.eg" target="_blank" data-i18n="footer_zu">Zagazig University</a></li>
+            <li><a href="#courses" data-section="courses" data-i18n="nav_courses">Courses</a></li>
+            <li><a href="#exams" data-section="exams" data-i18n="nav_exams">Exam Schedule</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer_contact">Contact</h4>
+          <p>📍 <span data-i18n="footer_address">Zagazig, Sharqia, Egypt</span></p>
+          <p>📧 info@fci.zu.edu.eg</p>
+          <p>📞 +20 55 230 0000</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 <span data-i18n="footer_copyright">Faculty of Computers & Information - Zagazig University. All rights reserved.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
